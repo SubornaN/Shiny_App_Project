@@ -57,7 +57,7 @@ data <- data %>%  mutate(Indicator = ifelse(
 unique(data$Indicator)
 
 # Saving the cleaned version of the csv file
-write_csv(data, path = './drug_overdose_cleaned.csv')
+write_csv(data, path = './cleaned_data.csv')
 
 
 
