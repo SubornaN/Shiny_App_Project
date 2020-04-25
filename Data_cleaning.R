@@ -4,68 +4,86 @@ library(tidyverse)
 #load the dataset
 data <- read_csv("Drug_Overdose.csv", col_names = TRUE)
 
-#checking structure & features of the data
-str(data)
-head(data, 20)
-length(unique(data$`State Name`))
-colnames(data)
-str_sort(unique(data$`State Name`))
-
-# Names to remove from State Name Column
-# "District of Columbia"
-# "New York City"
-
-# See the data in a new window
 View(data)
-
-# Filter out columns & change names of columns
-data <- data %>% select(`State Name`, Year, Month, `Data Value`, Indicator) %>% 
-  rename(Deaths = "Data Value", State = "State Name")
-
-# Checking column name & dimensions
-colnames(data)
 dim(data)
+colnames(data)
 
-# Checking # of missing values in each year data
-data %>% group_by(Year) %>% count(NAs = is.na(Deaths)) %>% filter(NAs == TRUE)
+data <- data %>% filter(Location != "District of Columbia")
 
-# Filtering out data without NAs
-data <- data %>% filter(!is.na(Deaths), 
-                        Indicator %in% c("Number of Drug Overdose Deaths",
-                                         "Number of Deaths",
-                                         "Opioids (T40.0-T40.4,T40.6)",
-                                         "Heroin (T40.1)",
-                                         "Methadone (T40.3)",
-                                         "Cocaine (T40.5)"))
+data_opioid <- data %>% select(Location, "2009__Opioid Overdose Death Rate (Age-Adjusted)",
+                                         "2010__Opioid Overdose Death Rate (Age-Adjusted)",
+                                         "2011__Opioid Overdose Death Rate (Age-Adjusted)",
+                                         "2012__Opioid Overdose Death Rate (Age-Adjusted)",
+                                         "2013__Opioid Overdose Death Rate (Age-Adjusted)",
+                                         "2014__Opioid Overdose Death Rate (Age-Adjusted)",
+                                         "2015__Opioid Overdose Death Rate (Age-Adjusted)",
+                                         "2016__Opioid Overdose Death Rate (Age-Adjusted)",
+                                         "2017__Opioid Overdose Death Rate (Age-Adjusted)",
+                                         "2018__Opioid Overdose Death Rate (Age-Adjusted)")
+data_opioid <- data_opioid %>% 
+  gather(key = 'Year', value = 'Opioid Overdose Death Rate', 
+                                      c("2009__Opioid Overdose Death Rate (Age-Adjusted)",
+                                        "2010__Opioid Overdose Death Rate (Age-Adjusted)",
+                                        "2011__Opioid Overdose Death Rate (Age-Adjusted)",
+                                        "2012__Opioid Overdose Death Rate (Age-Adjusted)",
+                                        "2013__Opioid Overdose Death Rate (Age-Adjusted)",
+                                        "2014__Opioid Overdose Death Rate (Age-Adjusted)",
+                                        "2015__Opioid Overdose Death Rate (Age-Adjusted)",
+                                        "2016__Opioid Overdose Death Rate (Age-Adjusted)",
+                                        "2017__Opioid Overdose Death Rate (Age-Adjusted)",
+                                        "2018__Opioid Overdose Death Rate (Age-Adjusted)"))
 
-data <- data %>%  mutate(Indicator = ifelse(
-                                  Indicator == 
-                                    "Number of Drug Overdose Deaths",'Overdose Deaths', ifelse(
-                                      Indicator ==
-                                      "Number of Deaths", "Total Deaths", ifelse(
-                                        Indicator ==
-                                        "Opioids (T40.0-T40.4,T40.6)", "Opioids Deaths", ifelse(
-                                          Indicator ==
-                                            "Heroin (T40.1)", "Heroin Deaths", ifelse(
-                                              Indicator ==
-                                                "Methadone (T40.3)", "Methadone Deaths", ifelse(
-                                                  Indicator ==
-                                                    "Cocaine (T40.5)", "Cocaine Deaths", Indicator)
-))))))
 
-# checking the column names
-unique(data$Indicator)
+
+data_opioid <- separate(data_opioid, Year, c("Year", "value"), sep = '__') %>%  select(-value)
+data_opioid$Year <- as.numeric(data_opioid$Year)
+
+View(data_opioid)
+
+data_all <- data %>% select(Location, "2009__All Drug Overdose Death Rate (Age-Adjusted)",
+                                      "2010__All Drug Overdose Death Rate (Age-Adjusted)",
+                                      "2011__All Drug Overdose Death Rate (Age-Adjusted)",
+                                      "2012__All Drug Overdose Death Rate (Age-Adjusted)",
+                                      "2013__All Drug Overdose Death Rate (Age-Adjusted)",
+                                      "2014__All Drug Overdose Death Rate (Age-Adjusted)",
+                                      "2015__All Drug Overdose Death Rate (Age-Adjusted)",
+                                      "2016__All Drug Overdose Death Rate (Age-Adjusted)",
+                                      "2017__All Drug Overdose Death Rate (Age-Adjusted)",
+                                      "2018__All Drug Overdose Death Rate (Age-Adjusted)")
+
+data_all <- data_all %>% gather(key = 'Year', value = 'All Overdose Death Rate', 
+                                     c("2009__All Drug Overdose Death Rate (Age-Adjusted)",
+                                       "2010__All Drug Overdose Death Rate (Age-Adjusted)",
+                                       "2011__All Drug Overdose Death Rate (Age-Adjusted)",
+                                       "2012__All Drug Overdose Death Rate (Age-Adjusted)",
+                                       "2013__All Drug Overdose Death Rate (Age-Adjusted)",
+                                       "2014__All Drug Overdose Death Rate (Age-Adjusted)",
+                                       "2015__All Drug Overdose Death Rate (Age-Adjusted)",
+                                       "2016__All Drug Overdose Death Rate (Age-Adjusted)",
+                                       "2017__All Drug Overdose Death Rate (Age-Adjusted)",
+                                       "2018__All Drug Overdose Death Rate (Age-Adjusted)"))
+
+data_all <- separate(data_all, Year, c("Year", "value"), sep = '__') %>%  select(-value)
+data_all$Year <- as.numeric(data_all$Year)
+
+View(data_all)
+
+joined <- inner_join(data_opioid, data_all, by = c("Year", "Location"))
+View(joined)
+
+
+joined$`Opioid Overdose Death Rate` <- as.numeric(joined$`Opioid Overdose Death Rate`)
+joined$`All Overdose Death Rate` <- as.numeric(joined$`All Overdose Death Rate`)
+class(joined$Year)
+
+joined <- joined %>% gather(`Opioid Overdose Death Rate`, 
+                        `All Overdose Death Rate`, 
+                        key = "Death Rate Types",
+                        value = 'Death Rates')
+View(joined)
 
 # Saving the cleaned version of the csv file
-write_csv(data, path = './cleaned_data.csv')
-
-
-
-
-
-
-
-
+write_csv(joined, path = './Drug_Overdose_App/cleaned_data.csv')
 
 
 
