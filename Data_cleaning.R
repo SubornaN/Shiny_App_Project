@@ -82,6 +82,21 @@ joined <- joined %>% gather(`Opioid Overdose Death Rate`,
                         value = 'Death Rates')
 View(joined)
 
+
+joined <- joined %>% mutate(`Death Rate Types` = ifelse(
+  `Death Rate Types` == 
+    'Opioid Overdose Death Rate', 
+  'Opioid Overdose', 'All Overdose'))
+
+joined <- joined %>% rename(
+  `Rate Type` = `Death Rate Types`,
+  Rate = `Death Rates`)
+
+joined <- joined %>% mutate(`Rate` = ifelse(
+  is.na(`Rate`) == TRUE, 0, `Rate`)
+)
+
+
 # Saving the cleaned version of the csv file
 write_csv(joined, path = './Drug_Overdose_App/cleaned_data.csv')
 
