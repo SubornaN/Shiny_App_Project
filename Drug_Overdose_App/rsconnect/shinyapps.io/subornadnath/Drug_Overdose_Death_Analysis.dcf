@@ -1,0 +1,12 @@
+name: Drug_Overdose_Death_Analysis
+title: Drug_Overdose_Death_Analysis
+username:
+account: subornadnath
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2190904
+bundleId: 3068974
+url: https://subornadnath.shinyapps.io/Drug_Overdose_Death_Analysis/
+when: 1587943259.01148
+asMultiple: FALSE
+asStatic: FALSE

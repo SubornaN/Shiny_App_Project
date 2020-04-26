@@ -161,7 +161,10 @@ shinyUI(dashboardPage(skin = "purple",
                                 rates in USA. The "Interactive Graphs" tab shows state level analysis for drug 
                                 overdose rate and lets users interact with the data. The "Map Visualization" tab
                                 shows a heat map of overdose deaths across USA. Lastly, the "Data Table" tab shows
-                                the data used to make this visualization web application.')
+                                the data used to make this visualization web application.'),
+                             h3('Disclaimer: For North Dakota, there were 6 missing data points from 2009 to 2013 for
+                                "Opioid Overdose" death rate and 1 missing data point for 2011 for 
+                                "All Overdose" death rate. These missing values were replaced with zero.')
                              )
                         )
                  )

@@ -20,7 +20,7 @@ shinyServer(function(input, output){
             geom_col(position = position_dodge(0)) + 
             theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
             scale_x_continuous(breaks = c(2009:2018)) + 
-            ylab("Death Rates Ratio (per 100k Population)") + 
+            ylab("Death Rates (per 100k Population)") + 
             ggtitle('Yearly Death Rates Ratio Between "All Overdose" & "Opioid Overdose"') + 
             scale_fill_brewer( palette = "Accent")
         
@@ -37,7 +37,7 @@ shinyServer(function(input, output){
             theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
             scale_x_continuous(breaks = c(2009:2018)) + 
             labs(title = 'Statewide Yearly Comparison of "All Overdose" & "Opioid Overdose" Death Rates Ratio') + 
-            ylab("Death Rates Ratio (per 100k Population)") + 
+            ylab("Death Rates (per 100k Population)") + 
             scale_fill_brewer( palette = "Accent")
         
         ggplotly(p) %>%
