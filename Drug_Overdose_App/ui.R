@@ -7,7 +7,7 @@ shinyUI(dashboardPage(skin = "purple",
                 
                 dashboardHeader(
                                 title = "Overdose Death Analysis",
-                                titleWidth = 230
+                                titleWidth = 235
                                 ), 
                     
                 dashboardSidebar(
