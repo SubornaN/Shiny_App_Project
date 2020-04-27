@@ -21,7 +21,7 @@ shinyServer(function(input, output){
             theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
             scale_x_continuous(breaks = c(2009:2018)) + 
             ylab("Death Rates (per 100k Population)") + 
-            ggtitle('Yearly Death Rates Ratio Between "All Overdose" & "Opioid Overdose"') + 
+            ggtitle('Yearly Death Rates Comparison Between "All Overdose" & "Opioid Overdose"') + 
             scale_fill_brewer( palette = "Accent")
         
         ggplotly(p) %>%
@@ -36,7 +36,7 @@ shinyServer(function(input, output){
             geom_col(position = position_dodge(0)) + 
             theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
             scale_x_continuous(breaks = c(2009:2018)) + 
-            labs(title = 'Statewide Yearly Comparison of "All Overdose" & "Opioid Overdose" Death Rates Ratio') + 
+            labs(title = 'Statewide Comparison of "All Overdose" & "Opioid Overdose" Death Rates') + 
             ylab("Death Rates (per 100k Population)") + 
             scale_fill_brewer( palette = "Accent")
         
@@ -49,7 +49,7 @@ shinyServer(function(input, output){
             ggplot(aes(x = Location, y = Rate, fill = `Rate Type`)) +
             geom_col(position = position_dodge(0)) + 
             theme(axis.text.x = element_text(angle = 90, vjust = 0.5)) +
-            labs(title = 'All States Comparison of "All Overdose" & "Opioid Overdose" Death Rate') + 
+            labs(title = 'All States Comparison of "All Overdose" & "Opioid Overdose" Death Rates') + 
             ylab("Death Rates (per 100k Population)") + 
             scale_fill_brewer( palette = "Accent")
         
@@ -126,18 +126,6 @@ shinyServer(function(input, output){
 ######################### DATA TABLE ############################
     output$table <- DT::renderDataTable({data})
     })
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
