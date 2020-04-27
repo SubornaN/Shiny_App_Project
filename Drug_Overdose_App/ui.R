@@ -6,8 +6,8 @@ shinyUI(dashboardPage(skin = "purple",
   
                 
                 dashboardHeader(
-                                title = "Overdose Death Analysis",
-                                titleWidth = 235
+                                title = "Opioid Overdose\nDeath Analysis",
+                                titleWidth = 300
                                 ), 
                     
                 dashboardSidebar(
@@ -61,19 +61,7 @@ shinyUI(dashboardPage(skin = "purple",
                 
                             tabItem(tabName = 'Graphs', 
                                        h2('State Level Comparison of Drug Overdose Death Rates'),
-                                    
-                                       fluidRow(box(
-                                                    plotlyOutput('iGraph1'), width = 9),
-                                                
-                                                box(
-                                                  h4('Pick a state to see death rates ratio 
-                                                       from 2009 - 2018.'),
-                                                  selectizeInput(inputId = 'Location',
-                                                                   label = 'Select a State',
-                                                                   choices = LocationID),
-                                                    width = 3)
-                                                    ),
-                                                  
+        
                                       fluidRow(box(
                                                   plotlyOutput('iGraph3'), width = 9), 
                                                box(
@@ -104,7 +92,20 @@ shinyUI(dashboardPage(skin = "purple",
                                                          label = 'Select State 3',
                                                          choices = LocationID), 
                                           width = 3),
-                                               )
+                                               ),
+                                    
+                                    
+                                    fluidRow(box(
+                                      plotlyOutput('iGraph1'), width = 9),
+                                      
+                                      box(
+                                        h4('Pick a state to see death rates ratio 
+                                                       from 2009 - 2018.'),
+                                        selectizeInput(inputId = 'Location',
+                                                       label = 'Select a State',
+                                                       choices = LocationID),
+                                        width = 3)
+                                    ),
                                                 
                                     ),
                 
@@ -125,10 +126,9 @@ shinyUI(dashboardPage(skin = "purple",
                                    width = 3),
                                infoBoxOutput("maxBox1"),
                                infoBoxOutput("maxBox2"),
-                               box(plotlyOutput('Map1'), width = 11),
-                               
-                               box(plotlyOutput('Map2'), width = 11)
-    
+ 
+                               box(plotlyOutput('Map2'), width = 11),
+                               box(plotlyOutput('Map1'), width = 11)
                                )
                               ),
                      

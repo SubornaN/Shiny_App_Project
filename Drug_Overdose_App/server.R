@@ -70,6 +70,24 @@ shinyServer(function(input, output){
     
 ###################### MAP ##########################
     
+    output$Map2 <- renderPlotly({
+        g <- list(
+            scope = 'usa',
+            projection = list(type = 'albers usa'),
+            showlakes = TRUE,
+            lakecolor = toRGB('white')
+        )
+        
+        rate %>% filter(Year == input$Year1, `Rate Type` == 'All Overdose') %>% 
+            plot_geo(locationmode = 'USA-states') %>%
+            add_trace(z = ~Rate, locations = ~Code,
+                      color = ~Rate, colors = 'Purples') %>% 
+            colorbar(title = "Death Rate (per 100k population)", limits = c(0,58)) %>% 
+            layout(
+                title = '"Opioid Overdose" Death Rates in USA from 2009 - 2018',
+                geo = g)
+    })
+    
     output$Map1 <- renderPlotly({
         g <- list(
             scope = 'usa',
@@ -88,23 +106,6 @@ shinyServer(function(input, output){
                 geo = g)
     })
     
-    output$Map2 <- renderPlotly({
-        g <- list(
-            scope = 'usa',
-            projection = list(type = 'albers usa'),
-            showlakes = TRUE,
-            lakecolor = toRGB('white')
-        )
-        
-        rate %>% filter(Year == input$Year1, `Rate Type` == 'All Overdose') %>% 
-            plot_geo(locationmode = 'USA-states') %>%
-            add_trace(z = ~Rate, locations = ~Code,
-                      color = ~Rate, colors = 'Purples') %>% 
-            colorbar(title = "Death Rate (per 100k population)", limits = c(0,58)) %>% 
-            layout(
-                title = '"Opioid Overdose" Death Rates in USA from 2009 - 2018',
-                geo = g)
-    })
 #################### INFOBOX #########################
     
     output$maxBox1 <- renderInfoBox({
