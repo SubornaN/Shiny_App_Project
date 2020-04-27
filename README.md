@@ -1,5 +1,9 @@
 # Shiny_App_Project
 
+Presentation Link: https://docs.google.com/presentation/d/13Sk6Uqn6lm0d8gPnxnuGpH6_KX_ojgTsGIqP4dPKADg/edit?usp=sharing
+
+Shiny App Link: https://subornadnath.shinyapps.io/Drug_Overdose_Death_Analysis/
+
 Background:
 The purpose of this web application is to explore the impact of opioid overdose deaths on total overdose deaths across USA. The data was collected from Kaiser Family Foundation (KFF) website. It includes data on opioid overdose death rate and total overdose death rate, per state, by year from 2009 to 2018. The web application includes 4 tabs. The "Overview" tab gives an overview of yearly overdose death rates in USA. The "Interactive Graphs" tab shows state level analysis for drug overdose rate and lets users interact with the data. The "Map Visualization" tab shows a heat map of overdose deaths across USA. Lastly, the "Data Table" tab shows the data used to make this visualization web application.
 
@@ -7,6 +11,7 @@ Quick note:
 For North Dakota, there were 6 missing data points from 2009 to 2013 for "Opioid Overdose" death rate and 1 missing data point for 2011 for "All Overdose" death rate. These missing values were replaced with zero.
 
 Dataset Link: https://bit.ly/2x7MHbk
+
 Method:
 
 1. Cleaning the Dataset:
