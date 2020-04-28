@@ -4,7 +4,7 @@ library(tidyverse)
 #load the dataset
 data <- read_csv("Drug_Overdose.csv", col_names = TRUE)
 
-View(data)
+
 dim(data)
 colnames(data)
 
@@ -38,7 +38,7 @@ data_opioid <- data_opioid %>%
 data_opioid <- separate(data_opioid, Year, c("Year", "value"), sep = '__') %>%  select(-value)
 data_opioid$Year <- as.numeric(data_opioid$Year)
 
-View(data_opioid)
+
 
 data_all <- data %>% select(Location, "2009__All Drug Overdose Death Rate (Age-Adjusted)",
                                       "2010__All Drug Overdose Death Rate (Age-Adjusted)",
@@ -66,10 +66,10 @@ data_all <- data_all %>% gather(key = 'Year', value = 'All Overdose Death Rate',
 data_all <- separate(data_all, Year, c("Year", "value"), sep = '__') %>%  select(-value)
 data_all$Year <- as.numeric(data_all$Year)
 
-View(data_all)
+
 
 joined <- inner_join(data_opioid, data_all, by = c("Year", "Location"))
-View(joined)
+
 
 
 joined$`Opioid Overdose Death Rate` <- as.numeric(joined$`Opioid Overdose Death Rate`)
@@ -80,7 +80,7 @@ joined <- joined %>% gather(`Opioid Overdose Death Rate`,
                         `All Overdose Death Rate`, 
                         key = "Death Rate Types",
                         value = 'Death Rates')
-View(joined)
+
 
 
 joined <- joined %>% mutate(`Death Rate Types` = ifelse(

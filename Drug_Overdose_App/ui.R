@@ -6,12 +6,12 @@ shinyUI(dashboardPage(skin = "purple",
   
                 
                 dashboardHeader(
-                                title = "Opioid Overdose\nDeath Analysis",
-                                titleWidth = 300
+                                title = "Opioid Death Analysis",
+                                titleWidth = 230
                                 ), 
                     
                 dashboardSidebar(
-                        sidebarUserPanel("Author: Suborna Nath"),
+                        sidebarUserPanel("Creator: Suborna Nath"),
                     
                         sidebarMenu(
                                 menuItem("Overview",
@@ -26,25 +26,27 @@ shinyUI(dashboardPage(skin = "purple",
                                 menuItem("Data Table", 
                                          tabName = "data", icon = icon('database')),
                                 
-                                menuItem("Information", 
-                                         tabName = "info", icon = icon("book"))
+                                menuItem("About Project", 
+                                         tabName = "info", icon = icon("book")),
+                                menuItem("About Me", 
+                                         tabName = "Me", icon = icon("user-circle"))
                                     )
                                 ), 
                 
 ############################################### FONT STYLE
                 
                 dashboardBody(
-                         tags$head(
-                         tags$style(
-                               HTML(
-                                '.main-header .logo {
-                                font-family: "Georgia", Times, "Century Gothic", serif;
+                  tags$head(
+                    tags$style(
+                      HTML(
+                        '.main-header .logo {
+                                font-family: "Century Gothic", Century, "Century Gothic", Century;
                                 font-weight: bold;
-                                font-size: 16px;
+                                font-size: 17px;
                                                     }'
-                                    )
-                                    )
-                                  ),
+                      )
+                    )
+                  ),
                             
 ################################################# OVERVIEW
                          
@@ -52,8 +54,9 @@ shinyUI(dashboardPage(skin = "purple",
                              tabItem(tabName = "intro", h2("Overview of Yearly Overdose Death Rates in USA"),
                                      fluidRow(
         
-                                       box(plotlyOutput("Graph1"), width = 12),
-                                       box(plotlyOutput("Graph2"), width = 12)
+                                       box(plotlyOutput("Graph1"), width = 6),
+                                       box(plotlyOutput("Graph2"), width = 6),
+                                       box(plotlyOutput("Graph3"), width = 12)
                                      )
                                      ),
                      
@@ -99,7 +102,7 @@ shinyUI(dashboardPage(skin = "purple",
                                       plotlyOutput('iGraph1'), width = 9),
                                       
                                       box(
-                                        h4('Pick a state to see death rates ratio 
+                                        h4('Pick a state to see death rates 
                                                        from 2009 - 2018.'),
                                         selectizeInput(inputId = 'Location',
                                                        label = 'Select a State',
@@ -117,18 +120,27 @@ shinyUI(dashboardPage(skin = "purple",
                              
 
                              fluidRow(
-                               box(h4('Pick an year to see trends across USA 
+                               box(h4('Pick an year & a death rate type
+                                        to see trends across USA 
                                        for both "All Overdose" and 
                                        "Opioid Overdose" death rates.'),
+                                   
                                    selectizeInput(inputId = 'Year1',
                                               label = 'Select an Year',
                                               choices = YearID),
+                                   
+                                   selectizeInput(inputId = 'RateType',
+                                                  label = 'Select a Rate Type',
+                                                  choices = Rate.TypeID),
                                    width = 3),
+                               
                                infoBoxOutput("maxBox1"),
                                infoBoxOutput("maxBox2"),
+                               infoBoxOutput("maxBox3"),
+                               infoBoxOutput("maxBox4"),
  
                                box(plotlyOutput('Map2'), width = 11),
-                               box(plotlyOutput('Map1'), width = 11)
+                               #box(plotlyOutput('Map1'), width = 11)
                                )
                               ),
                      
@@ -144,15 +156,14 @@ shinyUI(dashboardPage(skin = "purple",
 ############################################### INFORMATION 
 
                      tabItem(tabName = "info",
-                             h1('About Me'),
-                             h3('Author: Suborna Nath'),
-                             h3('Email: subornadnath@gmail.com'),
-                             h3('Github: https://github.com/SubornaN'),
-                             h3('LinkedIn: linkedin.com/in/subornanath/'),
                              
                              h1('About Project'),
-                             h3('Dataset: https://bit.ly/2x7MHbk'),
-                             h3('Description: The purpose of this web application 
+                             
+                             h3('Dataset:'), 
+                             h3('https://bit.ly/2x7MHbk'),
+                             
+                             h3('Description:'),
+                             h3('The purpose of this web application 
                                 is to explore the impact of opioid overdose deaths on total overdose deaths across USA.
                                 The data was collected from Kaiser Family Foundation (KFF) website. 
                                 It includes data on opioid overdose death rate and total overdose death 
@@ -162,10 +173,21 @@ shinyUI(dashboardPage(skin = "purple",
                                 overdose rate and lets users interact with the data. The "Map Visualization" tab
                                 shows a heat map of overdose deaths across USA. Lastly, the "Data Table" tab shows
                                 the data used to make this visualization web application.'),
-                             h3('Disclaimer: For North Dakota, there were 6 missing data points from 2009 to 2013 for
+                             
+                             h3('Disclaimer:'),
+                             h3('For North Dakota, there were 6 missing data points from 2009 to 2013 for
                                 "Opioid Overdose" death rate and 1 missing data point for 2011 for 
                                 "All Overdose" death rate. These missing values were replaced with zero.')
-                             )
+
+                             ),
+                    tabItem(tabName = 'Me',
+                            h1('About Me'),
+                            h3('Creator: Suborna Nath'),
+                            h3('Email: subornadnath@gmail.com'),
+                            h3('Github: https://github.com/SubornaN'),
+                            h3('LinkedIn: https://linkedin.com/in/subornanath/')
+                            
+                            )
                         )
                  )
     ))
